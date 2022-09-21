@@ -15,7 +15,7 @@ To see the demo of the website you can visit the above url and to run the projec
 2. Search new both using the search bar and with the query string in the page url.
 3. Refresh option to see new content every 30 seconds.
 4. Infinite scroll feature for news cards.
-
+<br/>
 
 # Getting Started with Create React App
 
