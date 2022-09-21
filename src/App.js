@@ -48,14 +48,24 @@ function App() {
 
   const fetchNews = async () => {
     setLoader(true);
-    await axios
-      .get(
-        `https://newsapi.org/v2/everything?q=${searchQuery}&pageSize=10&page=1&language=en&apiKey=d522984b204042caaa23f84327de8e8e`
-      )
+    const url = {
+      method: "GET",
+      url: "https://api.newscatcherapi.com/v2/search",
+      params: {
+        q: searchQuery,
+        lang: "en",
+        page: 1,
+        page_size: 10,
+      },
+      headers: {
+        "x-api-key": "2Oyrx9SUpd7Y-FGI7tNpUlLcArXM8ws_btDtJB9ou0w",
+      },
+    };
+    await axios(url)
       .then((result) => {
         setNewsArray(result.data.articles);
         setNoResultFound(Object.keys(result.data.articles).length === 0);
-        setTotalPages(Math.ceil(result.data.totalResults / 10));
+        setTotalPages(result.data.total_pages);
         setLoader(false);
         setPageNumber(2);
         setRefreshButton(false);
@@ -74,10 +84,20 @@ function App() {
       setLoader(true);
       setPageNumber(pageNumber + 1);
       console.log(pageNumber);
-      await axios
-        .get(
-          `https://newsapi.org/v2/everything?q=${searchQuery}&pageSize=10&page=${pageNumber}&language=en&apiKey=d522984b204042caaa23f84327de8e8e`
-        )
+      const url = {
+        method: "GET",
+        url: "https://api.newscatcherapi.com/v2/search",
+        params: {
+          q: searchQuery,
+          lang: "en",
+          page: pageNumber,
+          page_size: 10,
+        },
+        headers: {
+          "x-api-key": "2Oyrx9SUpd7Y-FGI7tNpUlLcArXM8ws_btDtJB9ou0w",
+        },
+      };
+      await axios(url)
         .then((result) => {
           setNewsArray((prevNews) => {
             return removeDuplicates([...prevNews, ...result.data.articles]);
